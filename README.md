@@ -16,6 +16,9 @@ documentation https://docs.gitlab.com/ce/user/project/pages/.
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+## What the fuck is this?
+I don't trust alkolist.github.io so I made my own.
+
 ## GitLab CI
 
 This project's static Pages are built by [GitLab CI][ci], following the steps

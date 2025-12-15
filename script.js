@@ -2,25 +2,6 @@
 let allProducts = [];
 const tableBody = document.querySelector('#products-table tbody');
 
-// Function to fetch the JSON data
-async function fetchData() {
-    try {
-        // Replace 'data.json' with the actual path to your JSON file
-        const response = await fetch('data/products_with_apk.json'); 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        // Assuming your JSON is an array of objects
-        allProducts = await response.json(); 
-        
-        // Initial rendering: sort by APK descending
-        applyFiltersAndSort();
-    } catch (error) {
-        console.error("Could not fetch products:", error);
-        tableBody.innerHTML = '<tr><td colspan="7">Error loading data. Check console.</td></tr>';
-    }
-}
-
 // 2. Function to apply all controls and trigger the re-render
 function applyFiltersAndSort() {
     let filteredProducts = [...allProducts]; // Start with a copy of all data
@@ -75,6 +56,27 @@ function applyFiltersAndSort() {
     // --- D. Render the resulting table ---
     renderTable(filteredProducts);
 }
+
+
+// Function to fetch the JSON data
+async function fetchData() {
+    try {
+        // Replace 'data.json' with the actual path to your JSON file
+        const response = await fetch('data/products_with_apk.json'); 
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        // Assuming your JSON is an array of objects
+        allProducts = await response.json(); 
+        
+        // Initial rendering: sort by APK descending
+        applyFiltersAndSort();
+    } catch (error) {
+        console.error("Could not fetch products:", error);
+        tableBody.innerHTML = '<tr><td colspan="7">Error loading data. Check console.</td></tr>';
+    }
+}
+
 
 // 3. Function to render the table (updated from your original script)
 function renderTable(products) {

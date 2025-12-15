@@ -141,14 +141,34 @@ function renderTable(products) {
 }
 
 // Use DOMContentLoaded to ensure all HTML elements are available before attaching listeners
-document.addEventListener('DOMContentLoaded', () => {
-    // Attach listener for the Search input (input fires on every key press)
-    document.getElementById('search').addEventListener('input', applyFiltersAndSort);
+// Global variable to hold the debounce timer
+let searchTimeout = null;
+const DEBOUNCE_DELAY = 300; // 300 milliseconds
 
-    // Attach listeners for the Select elements (change fires when value is selected)
+// Function to handle the debounced search
+function debouncedApplyFiltersAndSort() {
+    // 1. Clear any existing timer
+    clearTimeout(searchTimeout);
+
+    // 2. Set a new timer
+    searchTimeout = setTimeout(() => {
+        // Only run the actual filter/sort logic after the delay
+        applyFiltersAndSort();
+    }, DEBOUNCE_DELAY);
+}
+
+// Use DOMContentLoaded to ensure all HTML elements are available before attaching listeners
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Attach listener for the Search input to the DEBOUNCED function
+    document.getElementById('search').addEventListener('input', debouncedApplyFiltersAndSort);
+
+    // 2. Attach listeners for the Select elements directly (no debounce needed)
     document.getElementById('filter-assortment').addEventListener('change', applyFiltersAndSort);
     document.getElementById('sort-by').addEventListener('change', applyFiltersAndSort);
 });
+
+// Start the process by fetching the data
+fetchData();
 
 // Start the process by fetching the data
 fetchData();

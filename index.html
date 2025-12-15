@@ -21,28 +21,28 @@
 
     <section id="controls" style="margin-bottom: 20px;">
         <div>
-            <label for="search">Search Name/Category:</label>
+            <label for="search">Sök:</label>
             <input type="text" id="search" placeholder="e.g., Wine, Beer, Tempranillo">
         </div>
 
         <div>
-            <label for="filter-assortment">Assortment:</label>
+            <label for="filter-assortment">Sortiment:</label>
             <select id="filter-assortment">
-                <option value="">All</option>
-                <option value="BS">Ordervaror (BS)</option>
-                <option value="FS">Beställningssortimentet (FS)</option>
+                <option value="">Hela Sortimentet</option>
+                <option value="BS">Ordervaror</option>
+                <option value="FS">Inga Ordervaror</option>
             </select>
         </div>
 
         <div>
-            <label for="sort-by">Sort By:</label>
+            <label for="sort-by">Sortera enligt:</label>
             <select id="sort-by">
-                <option value="apk-desc">APK (Highest First)</option>
-                <option value="apk-asc">APK (Lowest First)</option>
-                <option value="price-asc">Price (Lowest First)</option>
-                <option value="price-desc">Price (Highest First)</option>
-                <option value="volume-desc">Volume (Highest First)</option>
-                <option value="name-asc">Name (A-Z)</option>
+                <option value="apk-desc">APK (Fallande)</option>
+                <option value="apk-asc">APK (Stigande)</option>
+                <option value="price-asc">Pris (Stigande)</option>
+                <option value="price-desc">Pris (Fallande)</option>
+                <option value="volume-desc">Volym (Fallande)</option>
+                <option value="name-asc">Namn (A-Ö)</option>
             </select>
         </div>
     </section>
@@ -51,13 +51,13 @@
         <table id="products-table">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th>Volume (ml)</th>
+                    <th>Namn</th>
+                    <th>Kategori</th>
+                    <th>Volym (ml)</th>
                     <th>ABV (%)</th>
-                    <th>Price (SEK)</th>
+                    <th>Pris (SEK)</th>
                     <th>APK</th>
-                    <th>Link</th>
+                    <th>Länk</th>
                 </tr>
             </thead>
             <tbody>

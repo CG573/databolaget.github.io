@@ -1,6 +1,8 @@
 // 1. Global variable to store the data once it's loaded
+const DATA_FILE_PATH = 'data/products_with_apk.json';
 let allProducts = [];
 const tableBody = document.querySelector('#products-table tbody');
+
 
 // 2. Function to apply all controls and trigger the re-render
 function applyFiltersAndSort() {
@@ -72,26 +74,70 @@ function applyFiltersAndSort() {
     renderTable(filteredProducts);
 }
 
+// New function to fetch the last updated timestamp from GitHub's API
+async function fetchLastUpdatedTime() {
+    const timeElement = document.getElementById('last-updated-time');
 
-// Function to fetch the JSON data
+    // 1. Construct the API URL for file metadata
+    // NOTE: Replace 'cg573/databolaget.github.io' with your actual 'OWNER/REPO' path
+    // For GitHub Pages repos, the main branch is usually 'main' or 'master'
+    const githubApiUrl = `https://api.github.com/repos/cg573/databolaget.github.io/commits?path=${DATA_FILE_PATH}&page=1&per_page=1`;
+
+    try {
+        const response = await fetch(githubApiUrl);
+        if (!response.ok) {
+            timeElement.textContent = 'Last update time unavailable.';
+            return;
+        }
+
+        const commits = await response.json();
+
+        if (commits.length > 0) {
+            // Get the commit date from the first (latest) commit
+            const lastCommitDate = commits[0].commit.author.date;
+
+            // Format the date for human readability (using Swedish locale)
+            const date = new Date(lastCommitDate);
+            const formatter = new Intl.DateTimeFormat('sv-SE', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                timeZone: 'Europe/Stockholm' // Adjust timezone if needed
+            });
+            const formattedDate = formatter.format(date);
+
+            timeElement.textContent = `Senast uppdaterad: ${formattedDate}`;
+        }
+    } catch (error) {
+        console.error("Could not fetch update time:", error);
+        timeElement.textContent = 'Last update time failed to load.';
+    }
+}
+
+// Function to fetch the JSON data (modified to call fetchLastUpdatedTime)
 async function fetchData() {
     try {
-        // Replace 'data.json' with the actual path to your JSON file
-        const response = await fetch('data/products_with_apk.json');
+        const response = await fetch(DATA_FILE_PATH);
+        // ... (rest of your existing fetchData logic) ...
+
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        // Assuming your JSON is an array of objects
         allProducts = await response.json();
 
-        // Initial rendering: sort by APK descending
+        // Initial rendering
         applyFiltersAndSort();
+
+        // 🚀 Fetch and display the last updated time after data is loaded
+        fetchLastUpdatedTime();
+
     } catch (error) {
         console.error("Could not fetch products:", error);
         tableBody.innerHTML = '<tr><td colspan="7">Error loading data. Check console.</td></tr>';
     }
 }
-
 
 // 3. Function to render the table (updated from your original script)
 function renderTable(products) {

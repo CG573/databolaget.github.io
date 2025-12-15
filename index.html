@@ -14,8 +14,6 @@
 </head>
 
 <body>
-    <script src="script.js"></script>
-
     <header>
         <h1>Databolaget</h1>
         <p>Så du slipper slösa pengar på "smak"</p>
@@ -24,12 +22,12 @@
     <section id="controls" style="margin-bottom: 20px;">
         <div>
             <label for="search">Search Name/Category:</label>
-            <input type="text" id="search" placeholder="e.g., Wine, Beer, Tempranillo" onkeyup="applyFiltersAndSort()">
+            <input type="text" id="search" placeholder="e.g., Wine, Beer, Tempranillo">
         </div>
 
         <div>
             <label for="filter-assortment">Assortment:</label>
-            <select id="filter-assortment" onchange="applyFiltersAndSort()">
+            <select id="filter-assortment">
                 <option value="">All</option>
                 <option value="BS">Ordervaror (BS)</option>
                 <option value="FS">Beställningssortimentet (FS)</option>
@@ -38,7 +36,7 @@
 
         <div>
             <label for="sort-by">Sort By:</label>
-            <select id="sort-by" onchange="applyFiltersAndSort()">
+            <select id="sort-by">
                 <option value="apk-desc">APK (Highest First)</option>
                 <option value="apk-asc">APK (Lowest First)</option>
                 <option value="price-asc">Price (Lowest First)</option>
@@ -67,6 +65,8 @@
             </tbody>
         </table>
     </section>
+
+    <script src="script.js"></script>
 </body>
 
 </html>

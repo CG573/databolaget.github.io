@@ -13,21 +13,21 @@ function applyFiltersAndSort() {
             const name = (product.productNameBold || '') + ' ' + (product.productNameThin || '');
             const category = product.customCategoryTitle || product.categoryLevel1 || '';
             const grapes = (product.grapes || []).join(', ');
-            
-            return name.toLowerCase().includes(searchTerm) || 
-                   category.toLowerCase().includes(searchTerm) ||
-                   grapes.toLowerCase().includes(searchTerm);
+
+            return name.toLowerCase().includes(searchTerm) ||
+                category.toLowerCase().includes(searchTerm) ||
+                grapes.toLowerCase().includes(searchTerm);
         });
     }
 
     // --- B. Apply Assortment Filter (Ordervaror/BS, etc.) ---
     const assortmentFilter = document.getElementById('filter-assortment').value;
     if (assortmentFilter) {
-        filteredProducts = filteredProducts.filter(product => 
+        filteredProducts = filteredProducts.filter(product =>
             product.assortment === assortmentFilter
         );
     }
-    
+
     // --- C. Apply Sorting ---
     const sortBy = document.getElementById('sort-by').value;
 
@@ -62,13 +62,13 @@ function applyFiltersAndSort() {
 async function fetchData() {
     try {
         // Replace 'data.json' with the actual path to your JSON file
-        const response = await fetch('data/products_with_apk.json'); 
+        const response = await fetch('data/products_with_apk.json');
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         // Assuming your JSON is an array of objects
-        allProducts = await response.json(); 
-        
+        allProducts = await response.json();
+
         // Initial rendering: sort by APK descending
         applyFiltersAndSort();
     } catch (error) {
@@ -89,28 +89,28 @@ function renderTable(products) {
 
     products.forEach(product => {
         const row = tableBody.insertRow();
-        
+
         // Calculate the combined product name
         const productName = `${product.productNameThin || ''} ${product.productNameBold || ''}`.trim();
 
         // 1. Name
         row.insertCell().textContent = productName;
-        
+
         // 2. Category
         row.insertCell().textContent = product.customCategoryTitle || product.categoryLevel1 || '-';
-        
+
         // 3. Volume (ml)
         row.insertCell().textContent = product.volume || '-';
-        
+
         // 4. ABV (%)
         row.insertCell().textContent = product.alcoholPercentage ? `${product.alcoholPercentage}%` : '-';
-        
+
         // 5. Price (SEK)
         row.insertCell().textContent = product.price ? `${product.price.toFixed(0)} kr` : '-';
-        
+
         // 6. APK (Alcohol per Krona) - formatted to 2 decimals
         row.insertCell().textContent = product.apk ? product.apk.toFixed(2) : '-';
-        
+
         // 7. Link
         const linkCell = row.insertCell();
         if (product.productUrl) {
@@ -124,6 +124,16 @@ function renderTable(products) {
         }
     });
 }
+
+// Use DOMContentLoaded to ensure all HTML elements are available before attaching listeners
+document.addEventListener('DOMContentLoaded', () => {
+    // Attach listener for the Search input (input fires on every key press)
+    document.getElementById('search').addEventListener('input', applyFiltersAndSort);
+
+    // Attach listeners for the Select elements (change fires when value is selected)
+    document.getElementById('filter-assortment').addEventListener('change', applyFiltersAndSort);
+    document.getElementById('sort-by').addEventListener('change', applyFiltersAndSort);
+});
 
 // Start the process by fetching the data
 fetchData();

@@ -20,7 +20,8 @@ thead {
   background: #eee;
 }
 
-th, td {
+th,
+td {
   padding: 0.5rem 0.6rem;
   border-bottom: 1px solid #ddd;
   text-align: left;
@@ -46,4 +47,22 @@ a {
 
 a:hover {
   text-decoration: underline;
+}
+
+#controls > div {
+  margin-bottom: 10px;
+  display: inline-block;
+  margin-right: 20px;
+}
+
+#controls label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 3px;
+}
+
+#controls input, #controls select {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }

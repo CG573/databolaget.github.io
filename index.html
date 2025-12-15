@@ -1,45 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <title>Databolaget</title>
+    <meta charset="UTF-8" />
+    <title>Databolaget</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
 
-  <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-  <header>
-    <h1>Databolaget</h1>
-    <p>Så du slipper slösa pengar på "smak"</p>
-  </header>
+    <header>
+        <h1>Databolaget</h1>
+        <p>Så du slipper slösa pengar på "smak"</p>
+    </header>
 
-  <section id="controls">
-    <!-- TODO: Filter/Stort/Search -->
-  </section>
+    <section id="controls" style="margin-bottom: 20px;">
+        <div>
+            <label for="search">Search Name/Category:</label>
+            <input type="text" id="search" placeholder="e.g., Wine, Beer, Tempranillo" onkeyup="applyFiltersAndSort()">
+        </div>
 
-  <section>
-    <table id="products-table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Category</th>
-          <th>Volume (ml)</th>
-          <th>ABV (%)</th>
-          <th>Price (SEK)</th>
-          <th>APK</th>
-          <th>Link</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- JS injects rows here -->
-      </tbody>
-    </table>
-  </section>
+        <div>
+            <label for="filter-assortment">Assortment:</label>
+            <select id="filter-assortment" onchange="applyFiltersAndSort()">
+                <option value="">All</option>
+                <option value="BS">Ordervaror (BS)</option>
+                <option value="FS">Beställningssortimentet (FS)</option>
+            </select>
+        </div>
 
-  <script src="script.js"></script>
+        <div>
+            <label for="sort-by">Sort By:</label>
+            <select id="sort-by" onchange="applyFiltersAndSort()">
+                <option value="apk-desc">APK (Highest First)</option>
+                <option value="apk-asc">APK (Lowest First)</option>
+                <option value="price-asc">Price (Lowest First)</option>
+                <option value="price-desc">Price (Highest First)</option>
+                <option value="volume-desc">Volume (Highest First)</option>
+                <option value="name-asc">Name (A-Z)</option>
+            </select>
+        </div>
+    </section>
+
+    <section>
+        <table id="products-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Volume (ml)</th>
+                    <th>ABV (%)</th>
+                    <th>Price (SEK)</th>
+                    <th>APK</th>
+                    <th>Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- JS injects rows here -->
+            </tbody>
+        </table>
+    </section>
+
+    <script src="script.js"></script>
 </body>
+
 </html>

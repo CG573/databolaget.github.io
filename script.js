@@ -28,32 +28,47 @@ function applyFiltersAndSort() {
         );
     }
 
-    // --- C. Apply Sorting ---
+    // --- C. Apply Robust Sorting ---
     const sortBy = document.getElementById('sort-by').value;
 
     filteredProducts.sort((a, b) => {
         switch (sortBy) {
             case 'apk-desc':
-                return b.apk - a.apk; // Highest APK first
+                // Use parseFloat to guarantee numerical comparison
+                const apkA = parseFloat(a.apk) || 0;
+                const apkB = parseFloat(b.apk) || 0;
+                return apkB - apkA;
             case 'apk-asc':
-                return a.apk - b.apk; // Lowest APK first
+                const apkA_asc = parseFloat(a.apk) || 0;
+                const apkB_asc = parseFloat(b.apk) || 0;
+                return apkA_asc - apkB_asc;
+
             case 'price-asc':
-                return a.price - b.price; // Lowest Price first
+                const priceA = parseFloat(a.price) || 0;
+                const priceB = parseFloat(b.price) || 0;
+                return priceA - priceB;
             case 'price-desc':
-                return b.price - a.price; // Highest Price first
+                const priceA_desc = parseFloat(a.price) || 0;
+                const priceB_desc = parseFloat(b.price) || 0;
+                return priceB_desc - priceA_desc;
+
             case 'volume-desc':
-                return b.volume - a.volume; // Highest Volume first
+                const volA = parseFloat(a.volume) || 0;
+                const volB = parseFloat(b.volume) || 0;
+                return volB - volA;
+
             case 'name-asc':
-                // For string sorting, use localeCompare
+                // ... (String sorting logic remains the same)
                 const nameA = (a.productNameThin || '') + ' ' + (a.productNameBold || '');
                 const nameB = (b.productNameThin || '') + ' ' + (b.productNameBold || '');
                 return nameA.localeCompare(nameB, 'sv', { sensitivity: 'base' });
             default:
-                return 0; // No sort
+                return 0;
         }
     });
 
     // --- D. Render the resulting table ---
+    console.log(`Rendering ${filteredProducts.length} products after filter/sort.`);
     renderTable(filteredProducts);
 }
 
